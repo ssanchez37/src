@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<robot name="pdsrooz" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="mu" value="1" />
+  <xacro:property name="kp" value="1e+13" />
+  <xacro:property name="kd" value="1" />
+
+  <material name="color_case">
+    <color rgba="0.6 0.6 0.6 0.3" />
+  </material>
+
+  <material name="solid_grey">
+    <color rgba="0.3 0.3 0.3 1 "/>
+  </material>
+
+  <link name="case">
+    <visual>
+      <geometry>
+        <mesh filename="package://pdsrooz_description/meshes/case_PDSR.dae"/>
+      </geometry>
+      <material name="color_case"/>
+      <origin xyz="0 0 0.2" rpy="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://pdsrooz_description/meshes/case_PDSR.dae"/>
+      </geometry>
+      <origin xyz="0 0 0.2" rpy="0 0 0"/>
+      <contact_coefficients mu="S{mu}" kp="${kp}" kd="${kd}"/>
+    </collision>
+    <inertial>
+      <mass value="0.5" />
+      <inertia
+				ixx="1.3024654351e-02" ixy="-4.0686824703e-06" ixz="-3.6544396711e-06"
+				iyy="1.3006953499e-02" iyz="-3.4803044650e-06"
+				izz="1.3015192835e-02" />
+    </inertial>
+  </link>
+
+  <link name="axis">
+    <visual>
+      <geometry>
+        <mesh filename="package://pdsrooz_description/meshes/axis_PDSR.dae" />
+      </geometry>
+      <material name="solid_grey"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://pdsrooz_description/meshes/axis_PDSR.dae" />
+      </geometry>
+      <contact_coefficients mu="${mu}" kp="${kp}" kd="${kd}" />
+    </collision>
+    <inertial>
+      <mass value="0.01" />
+			<!--origin  xyz="1.1100000000e-06 -3.0000000000e-08 -0.0000000000e+00" rpy="0 0 0" /-->
+			<inertia
+				ixx="3.1787797372e-06" ixy="-8.8499222247e-11" ixz="0.0000000000e+00"
+				iyy="1.3414771222e-03" iyz="0.0000000000e+00"
+				izz="1.3414789689e-03" />
+    </inertial>
+  </link>
+
+  <link name="rod">
+    <visual>
+      <geometry>
+        <mesh filename="package://pdsrooz_description/meshes/pendulum_PDSR.dae" />
+      </geometry>
+      <material name="solid_grey"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://pdsrooz_description/meshes/pendulum_PDSR.dae" />
+      </geometry>
+      <contact_coefficients mu="${mu}" kp="${kp}" kd="${kd}" />
+    </collision>
+    <inertial>
+			<mass value="0.639" />
+			<!--origin xyz="-0.0000000000e+00 -0.0000000000e+00 -9.0000000000e-02" rpy="0 0 0" /-->
+			<inertia
+				ixx="1.8676830030e-03" ixy="0.0000000000e+00" ixz="0.0000000000e+00"
+				iyy="1.8676830030e-03" iyz="0.0000000000e+00"
+				izz="2.8476475065e-04" />
+		</inertial>
+  </link>
+
+  <joint name="case_to_axis" type="continuous">x
+    <parent link="case"/>
+    <child link="axis"/>
+    <axis xyz="1 0 0"/>
+    <origin xyz="0 0 0.2" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="axis_to_rod" type="continuous">
+    <parent link="axis"/>
+    <child link="rod"/>
+    <axis xyz="0 1 0" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+</robot>

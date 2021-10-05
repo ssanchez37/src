@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<robot>
+  <material name="color_case">
+    <color rgba="0.6 0.6 0.6 0.8"/>
+  </material>
+
+  <material name="solid_grey">
+    <color rgba="0.3 0.3 0.3 1 "/>
+  </material>
+</robot>

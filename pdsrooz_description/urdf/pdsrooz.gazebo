@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<robot>
+  <gazebo reference="case_link">
+    <material>Gazebo/GreyTransparent</material>
+  </gazebo>
+
+  <gazebo reference="axis_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+  <gazebo reference="rod_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+  <!--gazebo reference="camera_link">
+    <material>Gazebo/Grey</material>
+  </gazebo-->
+
+  <!--gazebo reference="weight_link">
+    <material>Gazebo/Grey</material>
+  </gazebo-->
+
+  <!-- Differential Drive -->
+  <!--gazebo>
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>20</updateRate>
+      <leftJoint>case_to_axis</leftJoint>
+      <rightJoint>case_to_axis</rightJoint>
+      <wheelSeparation>0</wheelSeparation>
+      <wheelTorque>1.5</wheelTorque>
+      <wheelDiameter>0.016</wheelDiameter>
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom_link</odometryFrame>
+      <robotBaseFrame>case_link</robotBaseFrame>
+      <legacyMode>false</legacyMode>
+    </plugin>
+  </gazebo-->
+
+  <!-- GPS -->
+  <gazebo>
+    <plugin name="gps" filename="libhector_gazebo_ros_gps.so">
+      <alwaysOn>false</alwaysOn>
+      <updateRate>10.0</updateRate>
+      <topicName>/fix</topicName>
+      <referenceLatitude>0.0</referenceLatitude>
+      <referenceLongitude>0.0</referenceLongitude>
+      <referenceAltitude>0.0</referenceAltitude>
+      <gaussianNoise>0.0 0.0 0.0</gaussianNoise>
+      <offset>0 0 0</offset>
+      <velocityGaussianNoise>0 0 0</velocityGaussianNoise>
+      <frameId>base_link</frameId>
+    </plugin>
+  </gazebo>
+
+  <!--gazebo>
+    <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+      <alwaysOn>true</alwaysOn>
+      <bodyName>base_link</bodyName>
+      <topicName>imu</topicName>
+      <serviceName>imu_service</serviceName>
+      <gaussianNoise>0.0</gaussianNoise>
+      <updateRate>10.0</updateRate>
+    </plugin>
+  </gazebo-->
+
+  <gazebo reference="base_link">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <topic>__default_topic__</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>imu</topicName>
+        <bodyName>base_link</bodyName>
+        <updateRateHZ>10.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>base_link</frameName>
+        <initialOrientationAsReference>false</initialOrientationAsReference>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
+
+  <!-- camera -->
+  <!--gazebo reference="camera_link">
+   <sensor type="camera" name="camera1">
+     <update_rate>10.0</update_rate>
+     <camera name="camera1">
+       <horizontal_fov>1.3962634</horizontal_fov>
+       <image>
+         <width>800</width>
+         <height>800</height>
+         <format>R8G8B8</format>
+       </image>
+       <clip>
+         <near>0.02</near>
+         <far>300</far>
+       </clip>
+       <noise>
+         <type>gaussian</type>
+         <mean>0.0</mean>
+         <stddev>0.007</stddev>
+       </noise>
+     </camera>
+     <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+       <alwaysOn>false</alwaysOn>
+       <updateRate>10.0</updateRate>
+       <cameraName>camera1</cameraName>
+       <imageTopicName>image_raw</imageTopicName>
+       <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+       <frameName>camera_link</frameName>
+       <hackBaseline>0.07</hackBaseline>
+       <distortionK1>0.0</distortionK1>
+       <distortionK2>0.0</distortionK2>
+       <distortionK3>0.0</distortionK3>
+       <distortionT1>0.0</distortionT1>
+       <distortionT2>0.0</distortionT2>
+     </plugin>
+   </sensor>
+ </gazebo-->
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/pdsrooz</robotNamespace>
+      <!--robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType-->
+    </plugin>
+  </gazebo>
+
+</robot>
