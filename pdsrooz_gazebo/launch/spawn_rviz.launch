@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+	<!--param name="robot_description" command="$(find xacro)/xacro '$(find pdsrooz_description)/urdf/pdsrooz.urdf'"/>
+
+	<arg name="x" default="0"/>
+	<arg name="y" default="0"/>
+	<arg name="z" default="0"/>
+
+	<node name="pdsrooz_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+				args="-urdf -param robot_description -model pdsrooz -x $(arg x) -y $(arg y) -z $(arg z)"/-->
+
+
+  <arg name="model" default="$(find pdsrooz_description)/urdf/pdsrooz.urdf.xacro"/>
+  <arg name="gui" default="true" />
+  <arg name="rvizconfig" default="$(find pdsrooz_gazebo)/rviz/urdf.rviz" />
+
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
+
+  <!--node if="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+  <node unless="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" /-->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+</launch>
